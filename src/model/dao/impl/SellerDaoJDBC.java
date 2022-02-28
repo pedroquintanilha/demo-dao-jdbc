@@ -95,7 +95,6 @@ public class SellerDaoJDBC implements SellerDao{
 
 	@Override
 	public List<Seller> findAll() {
-		List<Seller> list = new ArrayList<Seller>();
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		
@@ -106,8 +105,28 @@ public class SellerDaoJDBC implements SellerDao{
 			
 			rs = st.executeQuery();
 			
+			List<Seller> list = new ArrayList<Seller>();
+			Department dep = null;
+			int cont = 0;
+			
 			while(rs.next()) {
-				Department dep = instantiateDepartment(rs);
+				
+				if(list == null) {
+					dep = instantiateDepartment(rs);
+				}
+				else {
+					for(Seller x : list) {
+						if(rs.getInt("DepartmentId") == x.getDepartment().getId()) {
+							dep = x.getDepartment();
+							cont++;
+						}	
+					}
+					if(cont == 0) {
+						 dep = instantiateDepartment(rs);
+					} 
+					cont =0;
+				}
+				
 				Seller obj = instantiateSeller(rs, dep);
 				list.add(obj);
 			}
