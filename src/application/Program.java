@@ -49,5 +49,25 @@ public class Program {
 		System.out.println();
 		System.out.println(newSeller);
 		
+		System.out.println();
+		System.out.println("=== TEST 5: seller update=== ");
+		seller = sellerDao.findById(5);
+		seller.setName("Donald Rainbow");
+		sellerDao.update(seller);
+		System.out.println("Updated!");
+		
+		System.out.println();
+		System.out.println("=== TEST 6: seller deleteById=== ");
+		sellerDao.deleteById(17);
+		System.out.println("Deleted!");
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }
